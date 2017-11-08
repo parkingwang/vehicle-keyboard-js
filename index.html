@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, user-scalable=no">
+    <title>停车王车牌专用键盘</title>
+    <style>
+        * {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            margin: 0 auto;
+            padding: 0 auto;
+            height: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        div#single-keyboard-box, div#mixed-keyboard-box {
+            height: 40%;
+        }
+
+    </style>
+</head>
+
+<body>
+     <!-- <div id="single-keyboard-box">
+        <single-keyboard :args="args" :callbacks="callbacks"/>
+    </div>
+    <script src="SingleKeyboard.js"></script>  -->
+     <div id="mixed-keyboard-box">
+        <mixed-keyboard :args="args" :callbacks="callbacks"/>
+    </div>
+    <script src="MixedKeyboard.js"></script>  
+</body>
+<script>
+
+    var number = "";
+
+    function native_callback_ontextkey(text){
+        number += text;
+        console.log("当前车牌[KEY]：" + number);
+        _updateKeyboard();
+    }
+
+    function native_callback_ondelkey(){
+        console.log("当前车牌[DEL]：" + number);
+        _updateKeyboard();
+    }
+    
+    function native_callback_onokkey(){
+        console.log("当前车牌[OK]");
+    }
+
+    function native_callback_completed(number, isAutoCompleted){
+        console.log("当前车牌[完成]：" + number + ", 自动完成:" + isAutoCompleted);
+    }
+
+    function native_callback_changed(number, isCompleted){
+        console.log("当前车牌[变更]：" + number + ", 已完成:" + isCompleted);
+    }
+
+    function native_callback_show_message(message){
+        console.log(message);
+    }
+
+    function _updateKeyboard(){
+        // native_update_keyboard(presetNumber, keyboardType, provinceName, numberType, inputIndex)
+        native_update_keyboard(number, 0, "广东省", 5, -1);
+    }
+
+     _updateKeyboard();
+
+    // ！！！！！！！！！！！！！！以下为测试代码 ！！！！！！！！！！！！！！！
+    // ！！！！！！！！！！！！！！以下为测试代码 ！！！！！！！！！！！！！！！
+    // ！！！！！！！！！！！！！！以下为测试代码 ！！！！！！！！！！！！！！！
+    // native_update_keyboard("", 2, "广东省");
+
+    // setTimeout(function() {
+    //     native_update_keyboard("", 2, "广东省");
+    // }, 1000);
+
+    // setTimeout(function() {
+    //     native_update_keyboard("粤", 2, "广东省");
+    // }, 2000);
+
+    // setTimeout(function() {
+    //     native_update_keyboard("粤L12", 2, "广东省");
+    // }, 3000);
+
+    // setTimeout(function() {
+    //     native_update_keyboard("", 2, "陕西省");
+    // }, 5000);
+</script>
+
+</html>
