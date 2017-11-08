@@ -1,4 +1,6 @@
-# keyboard-vue
+# 停车王车牌号码专用键盘 VehicleKeyboard - vue.js
+
+GitHub项目主页： [https://github.com/parkingwang/vehicle-keyboard-js](https://github.com/parkingwang/vehicle-keyboard-js)
 
 ![](keyboard.jpeg)
 
