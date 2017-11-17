@@ -310,7 +310,7 @@ module.exports = {
     // 当键盘数据只有一个键位可选择时,自动提交点击事件:(武警车牌第二位J和使馆车最后一位)
     autocommitsinglekey: function(layout){
         if(this.clickEventType ===_ClickEvent.KEY) {
-            var availableKeys = layout.keys.filter(function(k){ return k.enabled; });
+            var availableKeys = layout.keys.filter(function(k){ return k.enabled && !k.isFunKey; });
             if(availableKeys.length === 1){
                 var self = this;
                 setTimeout(function(){ self.onTextKeyClick(availableKeys[0].text);}, 32);
