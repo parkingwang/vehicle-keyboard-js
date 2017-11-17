@@ -125,6 +125,8 @@
         EMBASSY: 6,
         // 新大使馆车牌
         EMBASSY_NEW: 7,
+        // 民航摆渡车
+        AVIATION: 8,
 
         nameOf: function(mode) {
             switch (mode) {
@@ -137,6 +139,7 @@
                 case 5: return "NEW_ENERGY";
                 case 6: return "EMBASSY";
                 case 7: return "EMBASSY_NEW";
+                case 8: return "AVIATION";
                 default: return "UNKNOWN";
             }
         },
@@ -161,7 +164,9 @@
     var _CHAR_MACAO = "澳";
     var _CHAR_XUE = "学";
     var _CHAR_JING = "警";
-    var _STR_POSTFIX_ZH = _CHAR_XUE + _CHAR_JING + "挂领试超练";
+    var _CHAR_MIN = "民";
+    var _CHAR_HANG = "航";
+    var _STR_POSTFIX_ZH = _CHAR_JING + "挂领试超";
     var _CHAR_W = "W";
     var _CHAR_J = "J";
     var _CHAR_O = "O";
@@ -241,6 +246,8 @@
                 return NUM_TYPES.ARMY;
             } else if (_CHAR_EMBASSY === first) {
                 return NUM_TYPES.EMBASSY;
+            } else if (_CHAR_MIN === first) {
+                return NUM_TYPES.AVIATION;
             } else if (_in(_STR_123, first)) {
                 return NUM_TYPES.EMBASSY_NEW;
             } else if (_CHAR_W === first) {
@@ -330,16 +337,23 @@
         row0: _keysOf(_STR_CIVIL_PVS.substr(0, 10)), // "京津晋冀蒙辽吉黑沪苏"
         row1: _keysOf(_STR_CIVIL_PVS.substr(10, 10)), // "浙皖闽赣鲁豫鄂湘粤桂"
         row2: _keysOf(_STR_CIVIL_PVS.substr(20, 10)), // "琼渝川贵云藏陕甘青宁"
-        row3: _keysOf(_STR_CIVIL_PVS.substr(30, 1) + _STR_EMBASSY_PVS + _CHAR_W + _STR_ARMY_PVS.substr(0, 4)), // 新
+        row3: _keysOf(_STR_CIVIL_PVS.substr(30, 1) + _CHAR_MIN + _STR_EMBASSY_PVS + _CHAR_W + _STR_ARMY_PVS.substr(0, 4)), // 新民使123WQVKH
         row4: _keysOf(_STR_ARMY_PVS.substr(4, 9) + _CHAR_DEL)
     }, _LAYOUT_FULL, 0);
     Cached.reg({
         row0: _keysOf(_STR_NUM),
         row1: _keysOf(_STR_Q_IOP),
         row2: _keysOf(_STR_A_L),
-        row3: _keysOf(_STR_Z_M + _STR_HK_MACAO),
-        row4: _keysOf(_STR_POSTFIX_ZH + _CHAR_EMBASSY + _CHAR_DEL)
-    }, _LAYOUT_FULL, [1, 2, 3, 4, 5, 6, 7]);
+        row3: _keysOf(_STR_Z_M + _CHAR_XUE + _CHAR_HANG),
+        row4: _keysOf(_STR_HK_MACAO + _STR_POSTFIX_ZH + _CHAR_EMBASSY + _CHAR_DEL)
+    }, _LAYOUT_FULL, 1);
+    Cached.reg({
+        row0: _keysOf(_STR_NUM),
+        row1: _keysOf(_STR_Q_IOP),
+        row2: _keysOf(_STR_A_L),
+        row3: _keysOf(_STR_Z_M + _CHAR_XUE),
+        row4: _keysOf(_STR_HK_MACAO + _STR_POSTFIX_ZH + _CHAR_EMBASSY + _CHAR_DEL)
+    }, _LAYOUT_FULL, [2, 3, 4, 5, 6, 7]);
 
     // 处理“民用+武警”的特殊键位2种情况:
     // 1 - 第一位键盘布局中，显示带武警字符的特殊布局:
@@ -383,6 +397,7 @@
     var _KEY_CIVIL = "keys.civil";
     var _KEY_ARMY = "keys.army";
     var _KEY_WJ = "keys.wj";
+    var _KEY_AVIATION = "keys.aviation";
     var _KEY_EMBASSY = "keys.embassy";
     var _KEY_EMBASSY_ZH = "keys.embassy.zh";
     var _KEY_NUMBRICS = "keys.num";
@@ -392,7 +407,7 @@
     var _KEY_HK_MACAO = "keys.hk.macao";
     var _KEY_POSTFIX = "keys.postfix";
 
-    Cached.reg(_keysOf(_STR_CIVIL_PVS + _STR_EMBASSY_PVS + _CHAR_W + _STR_ARMY_PVS), _KEY_ANY);
+    Cached.reg(_keysOf(_STR_CIVIL_PVS + _STR_EMBASSY_PVS + _CHAR_W + _STR_ARMY_PVS + _CHAR_MIN), _KEY_ANY);
     Cached.reg(_keysOf(_STR_NUM), _KEY_NUMBRICS);
     Cached.reg(_keysOf(_STR_CHARS), _KEY_NUMBRICS_LETTERS);
     Cached.reg(_keysOf(_STR_CHARS + _CHAR_JING), _KEY_O_POLICE);
@@ -401,12 +416,13 @@
     Cached.reg(_keysOf(_STR_ARMY_AREA), _KEY_ARMY, 1);
     Cached.reg(_keysOf(_STR_123), _KEY_EMBASSY, 1);
     Cached.reg(_keysOf(_CHAR_J), _KEY_WJ, 1);
+    Cached.reg(_keysOf(_CHAR_HANG), _KEY_AVIATION, 1);
 
     Cached.reg(_keysOf(_STR_NUM + _STR_CIVIL_PVS), _KEY_WJ, 2);
 
     Cached.reg(_keysOf(_STR_NUM + _STR_DF), _KEY_NUMERICS_DF);
     Cached.reg(_keysOf(_STR_HK_MACAO), _KEY_HK_MACAO);
-    Cached.reg(_keysOf(_STR_CHARS + _STR_POSTFIX_ZH), _KEY_POSTFIX);
+    Cached.reg(_keysOf(_STR_CHARS + _STR_POSTFIX_ZH + _CHAR_XUE), _KEY_POSTFIX);
     Cached.reg(_keysOf(_CHAR_EMBASSY), _KEY_EMBASSY_ZH);
 
     // 注册键位提供器，序号：0
@@ -425,6 +441,7 @@
                 case NUM_TYPES.ARMY: return Cached.load(_KEY_ARMY, 1);
                 case NUM_TYPES.WUJING:
                 case NUM_TYPES.WUJING_LOCAL: return Cached.load(_KEY_WJ, 1);
+                case NUM_TYPES.AVIATION: return Cached.load(_KEY_AVIATION, 1);
                 case NUM_TYPES.EMBASSY: return Cached.load(_KEY_EMBASSY, 1);
                 case NUM_TYPES.EMBASSY_NEW: return Cached.load(_KEY_NUMBRICS);
                 default: return Cached.load(_KEY_CIVIL, 1);
@@ -479,6 +496,7 @@
                 case NUM_TYPES.ARMY:
                 case NUM_TYPES.EMBASSY:
                 case NUM_TYPES.WUJING:
+                case NUM_TYPES.AVIATION:
                 case NUM_TYPES.WUJING_LOCAL: return Cached.load(_KEY_NUMBRICS_LETTERS);
                 case NUM_TYPES.EMBASSY_NEW: return Cached.load(_KEY_EMBASSY_ZH);
                 default:
