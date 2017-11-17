@@ -580,7 +580,7 @@
         return _mapLayout(layout, function(entity) {
             // 注意,KeyEntity的KeyCode还是原始状态,尚未更新,不能使用它来判断是否是功能键
             if ("-" === entity.text) {
-                return _keyOfCode(entity, "删除" /* ← */ , KEY_TYPES.FUN_DEL);
+                return _keyOfCode(entity, "" /* ← */ , KEY_TYPES.FUN_DEL);
             } else if ("+" === entity.text) {
                 return _keyOfCode(entity, "确定", KEY_TYPES.FUN_OK);
             } else {
@@ -703,7 +703,7 @@
     _export.NUM_TYPES = NUM_TYPES;
     _export.KEY_TYPES = KEY_TYPES;
     _export.KEYBOARD_TYPES = KB_TYPES;
-    _export.VERSION = "R1.0/2017.1108/iRain(SZ)";
+    _export.VERSION = "R1.0/2017.1117/iRain(SZ)";
 
     return _export;
 
