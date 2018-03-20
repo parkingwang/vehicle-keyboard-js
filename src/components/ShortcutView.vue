@@ -2,7 +2,7 @@
     <div style="height: 100%;">
         <ul class="shortcut-row">
             <li v-for="key in shortcuts">
-                <button class="key r-border shortcut"
+                <button class="key txt-key r-border shortcut"
                     tag="button"
                     :class="('keycodeof-' + key.keyCode)"
                     :disabled="(!key.enabled)"
