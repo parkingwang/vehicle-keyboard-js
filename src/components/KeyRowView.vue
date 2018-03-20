@@ -14,6 +14,10 @@
 </template>
 
 <script>
+
+// 定义键盘组件的键位行的逻辑
+// Author: 陈哈哈 yoojiachen@gmail.com
+
 module.exports = {
     props: ["rowcount", "keys", "isfunc", "keycount"],
     filters: {

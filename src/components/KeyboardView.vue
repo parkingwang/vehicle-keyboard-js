@@ -18,6 +18,9 @@
 
 <script>
 
+// 实现键盘整体的UI操作逻辑
+// Author: 陈哈哈 yoojiachen@gmail.com
+
 var $ = require("../js/utils.js");
 
 module.exports = {

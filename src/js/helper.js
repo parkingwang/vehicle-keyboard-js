@@ -1,6 +1,8 @@
 var def = require("./define.js")
 
-/////////
+
+// 纯辅助函数
+// Author: 陈哈哈 yoojiachen@gmail.com
 
 /**
  * 构建一个KeyEntity

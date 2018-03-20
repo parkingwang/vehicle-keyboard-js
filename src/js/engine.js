@@ -3,6 +3,9 @@
 }(this, (function() {
     "use strict";
 
+    // 定义键盘引擎内部键盘响应逻辑
+    // Author: 陈哈哈 yoojiachen@gmail.com
+
     var frm = require("./frm.js")
     var def = require("./define.js")
     var hlp = require("./helper")

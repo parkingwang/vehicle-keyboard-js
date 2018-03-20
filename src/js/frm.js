@@ -4,7 +4,7 @@
     "use strict";
 
     // 定义一些处理键盘内部逻辑的框架类
-    // yoojiachen@gmail.com
+    // Author: 陈哈哈 yoojiachen@gmail.com
 
     var Cached = {
         _mcached: {},

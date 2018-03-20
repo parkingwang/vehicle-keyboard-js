@@ -1,3 +1,7 @@
+
+// Vue插件，Tap事件处理
+// Author: 陈哈哈 yoojiachen@gmail.com
+
 var _IS_MOBILE = /mobile|table|ip(ad|hone|od)|android/i.test(navigator.userAgent);
 
 var plugin = {

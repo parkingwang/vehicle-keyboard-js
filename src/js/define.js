@@ -4,7 +4,7 @@
     "use strict";
 
     // 定义键盘引擎内部的一些参数和类型说明
-    // yoojiachen@gmail.com
+    // Author: 陈哈哈 yoojiachen@gmail.com
 
     /**
      * 键盘类型

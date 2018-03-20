@@ -16,6 +16,10 @@
 </template>
 
 <script>
+
+// 定义输入框的UI操作逻辑
+// Author: 陈哈哈 yoojiachen@gmail.com
+
 module.exports = {
     props: ["numberArray", "mode", "selectedIndex"],
     methods: {

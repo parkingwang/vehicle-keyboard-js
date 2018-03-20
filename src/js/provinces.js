@@ -3,6 +3,9 @@
 }(this, (function () { 
     "use strict";
 
+    // 定义快捷省份的关联关系
+    // Author: 陈哈哈 yoojiachen@gmail.com
+
     function Province(name, shortname){
         this.name = name;
         this.shortname = shortname;

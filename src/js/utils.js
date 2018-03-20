@@ -1,3 +1,7 @@
+
+// 工具函数
+// Author: 陈哈哈 yoojiachen@gmail.com
+
 export function __arrayOf(obj, fieldName) {
     var arr = obj[fieldName];
     return arr ? arr : [];
