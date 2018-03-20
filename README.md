@@ -41,6 +41,13 @@
 
 基于VUE.js实现的单组件，单JS文件，包含vue核心库，文件大小约 108KB。
 
+## 2.3 单独车牌键盘引擎文件
+
+Android、iOS目前版本会依赖此内核文件，使用其`native_update_keyboard`来生成键盘布局和键位。
+界面UI部分，Android和iOS使用平台原生的组件来实现。
+
+> VehicleEngine.js
+
 # 三、键盘内部规则设计说明
 
 ## 3.1 键盘逻辑引擎
@@ -85,6 +92,12 @@
 发布时生成JS文件：
 
 > npm run build
+
+生成三个JS文件：
+
+1. MixedKeyboard.js 混合了输入框的组件；
+2. SingleKeyboard.js 只有键盘组件，需要由应用自身实现输入框样式和逻辑；
+3. VehicleEngine.js 车牌键盘内核逻辑文件，Android、iOS项目目前依赖此文件的实现；
 
 # 维护
 
