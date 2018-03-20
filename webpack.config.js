@@ -6,6 +6,7 @@ module.exports = {
   entry: {
     SingleKeyboard: "./src/single-keyboard-launcher.js",
     MixedKeyboard: "./src/mixed-keyboard-launcher.js",
+    VehicleEngine: "./src/js/engine.js",
   },
   output: {
     path: path.resolve(__dirname, "."),
