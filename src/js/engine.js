@@ -5,97 +5,7 @@
 
     var frm = require("./frm.js")
     var def = require("./define.js")
-
-    /////////
-
-    /**
-     * 构建一个KeyEntity
-     * @param {*text} 键位文本
-     * @param {*keyCode} 按键码
-     * @param {*enabled} 是否启用状态
-     */
-    function _keyOf(text, keyCode, enabled) {
-        return {
-            text: text, // 键位文字
-            keyCode: keyCode === undefined ? def.KEY_TYPES.GENERAL : keyCode, // 键位功能类型代码，默认：普通键位
-            enabled: enabled === undefined ? true : enabled, // 是否可用，默认：启用
-            isFunKey: keyCode === undefined ? false : (keyCode !== def.KEY_TYPES.GENERAL) // 是否为功能键
-        };
-    }
-
-    /**
-     * 修改和创建一个新的KeyEntity，指定是否启用状态。
-     * @param {*entity} 原KeyEntity
-     * @param {*enabled} 是否启用状态
-     */
-    function _keyOfEnabled(entity, enabled) {
-        return _keyOf(
-            entity.text, entity.keyCode,
-            enabled // 修改
-        );
-    }
-
-    /** 将字符串转换成KeyEntity */
-    function _keysOf(str) {
-        var output = new Array();
-        for (var i = 0; i < str.length; i++) {
-            output.push(_keyOf(str[i]));
-        }
-        return output;
-    }
-
-    /** 修改和创建一个新的KeyEntity，指定功能键盘参数 */
-    function _keyOfCode(entity, text, keyCode) {
-        return _keyOf(
-            text, keyCode, // 修改
-            entity.enabled);
-    }
-
-    function _in(src, item) {
-        return src.indexOf(item) >= 0;
-    }
-
-    function _isProvince(str) {
-        return _in(def.S_CIVIL_PVS, str);
-    }
-
-    /** 探测车牌号码的模式 */
-    function detectNumberTypeOf(presetNumber) {
-        if (presetNumber.length === 0) {
-            return def.NUM_TYPES.AUTO_DETECT;
-        } else {
-            var first = presetNumber.charAt(0);
-            if (_in(def.S_ARMY_PVS, first)) {
-                return def.NUM_TYPES.ARMY;
-            } else if (def.C_EMBASSY === first) {
-                return def.NUM_TYPES.EMBASSY;
-            } else if (def.C_MIN === first) {
-                return def.NUM_TYPES.AVIATION;
-            } else if (_in(def.S_123, first)) {
-                return def.NUM_TYPES.EMBASSY_NEW;
-            } else if (def.C_W === first) {
-                if (presetNumber.length >= 3 && 
-                    _isProvince(presetNumber.charAt(2))) {
-                        return def.NUM_TYPES.WUJING_LOCAL;
-                } else {
-                    return def.NUM_TYPES.WUJING;
-                }
-            } else if (_isProvince(first)) {
-                if (presetNumber.length === 8) {
-                    // 新能源车牌：
-                    if(/\W[A-Z][0-9DF][0-9A-Z]\d{3}[0-9DF]/.test(presetNumber)){
-                        return def.NUM_TYPES.NEW_ENERGY;
-                    }else{
-                        return def.NUM_TYPES.UNKNOWN;
-                    }
-                } else {
-                    return def.NUM_TYPES.CIVIL;
-                }
-            } else {
-                return def.NUM_TYPES.UNKNOWN;
-            }
-        }
-    }
+    var hlp = require("./helper")
 
     /** 全局配置 */
     var _GlobalConf = {
@@ -109,75 +19,78 @@
 
     ////// 注册布局提供器 START //////
 
-    var _LAYOUT_CIVIL = "layout.c";
-    var _LAYOUT_SPEC = "layout.s";
-    var _LAYOUT_SPEC_FULL = "layout.s.f";
-    var _LAYOUT_FULL = "layout.f";
-
+    
     // 民用键盘布局：
+    var _LAYOUT_CIVIL = "layout.c";
     frm.Cached.reg({
-        row0: _keysOf(def.S_CIVIL_PVS.substr(0, 9)), // 京津晋冀蒙辽吉黑沪
-        row1: _keysOf(def.S_CIVIL_PVS.substr(9, 8)), // 苏浙皖闽赣鲁豫鄂
-        row2: _keysOf(def.S_CIVIL_PVS.substr(17, 8)), // 湘粤桂琼渝川贵云
-        row3: _keysOf(def.S_CIVIL_PVS.substr(25, 6) + def.S_DEL_OK), // 藏陕甘青宁新-+
+        row0: hlp.keysOf(def.S_CIVIL_PVS.substr(0, 9)), // 京津晋冀蒙辽吉黑沪
+        row1: hlp.keysOf(def.S_CIVIL_PVS.substr(9, 8)), // 苏浙皖闽赣鲁豫鄂
+        row2: hlp.keysOf(def.S_CIVIL_PVS.substr(17, 8)), // 湘粤桂琼渝川贵云
+        row3: hlp.keysOf(def.S_CIVIL_PVS.substr(25, 6) + def.S_DEL_OK), // 藏陕甘青宁新-+
     }, _LAYOUT_CIVIL, 0);
     frm.Cached.reg({
-        row0: _keysOf(def.S_NUM),
-        row1: _keysOf(def.S_Q_OP + def.C_MACAO),
-        row2: _keysOf(def.S_A_L + def.C_HK),
-        row3: _keysOf(def.S_Z_M + def.S_DEL_OK),
+        row0: hlp.keysOf(def.S_NUM),
+        row1: hlp.keysOf(def.S_Q_OP + def.C_MACAO),
+        row2: hlp.keysOf(def.S_A_L + def.C_HK),
+        row3: hlp.keysOf(def.S_Z_M + def.S_DEL_OK),
     }, _LAYOUT_CIVIL, 1);
     frm.Cached.reg({
-        row0: _keysOf(def.S_NUM),
-        row1: _keysOf(def.S_Q_P + def.S_HK_MACAO),
-        row2: _keysOf(def.S_A_L + def.C_XUE),
-        row3: _keysOf(def.S_Z_M + def.S_DEL_OK),
+        row0: hlp.keysOf(def.S_NUM),
+        row1: hlp.keysOf(def.S_Q_P + def.S_HK_MACAO),
+        row2: hlp.keysOf(def.S_A_L + def.C_XUE),
+        row3: hlp.keysOf(def.S_Z_M + def.S_DEL_OK),
     }, _LAYOUT_CIVIL, [2, 3, 4, 5, 6, 7]);
 
+
     // 民用+特殊车牌布局：
+    var _LAYOUT_SPEC = "layout.s";
+    var _LAYOUT_SPEC_FULL = "layout.s.f";
     frm.Cached.reg({
-        row0: _keysOf(def.S_CIVIL_PVS.substr(0, 9)), // "京津晋冀蒙辽吉黑沪"
-        row1: _keysOf(def.S_CIVIL_PVS.substr(9, 9)), // "苏浙皖闽赣鲁豫鄂湘"
-        row2: _keysOf(def.S_CIVIL_PVS.substr(18, 9)), // "粤桂琼渝川贵云藏"
-        row3: _keysOf(def.S_CIVIL_PVS.substr(25, 5) + def.C_EMBASSY +def.C_W + def.S_DEL_OK), // 陕甘青宁新使W-+
+        row0: hlp.keysOf(def.S_CIVIL_PVS.substr(0, 9)), // "京津晋冀蒙辽吉黑沪"
+        row1: hlp.keysOf(def.S_CIVIL_PVS.substr(9, 9)), // "苏浙皖闽赣鲁豫鄂湘"
+        row2: hlp.keysOf(def.S_CIVIL_PVS.substr(18, 9)), // "粤桂琼渝川贵云藏"
+        row3: hlp.keysOf(def.S_CIVIL_PVS.substr(25, 5) + def.C_EMBASSY +def.C_W + def.S_DEL_OK), // 陕甘青宁新使W-+
     }, _LAYOUT_SPEC, 0);
     frm.Cached.reg({
-        row0: _keysOf(def.S_NUM + def.S_CIVIL_PVS.substr(0, 1)),
-        row1: _keysOf(def.S_CIVIL_PVS.substr(1, 11)),
-        row2: _keysOf(def.S_CIVIL_PVS.substr(12, 11)),
-        row3: _keysOf(def.S_CIVIL_PVS.substr(22, 8) + def.S_DEL_OK),
+        row0: hlp.keysOf(def.S_NUM + def.S_CIVIL_PVS.substr(0, 1)),
+        row1: hlp.keysOf(def.S_CIVIL_PVS.substr(1, 11)),
+        row2: hlp.keysOf(def.S_CIVIL_PVS.substr(12, 11)),
+        row3: hlp.keysOf(def.S_CIVIL_PVS.substr(22, 8) + def.S_DEL_OK),
     }, _LAYOUT_SPEC, 2);
 
     frm.Cached.reg({
-        row0: _keysOf(def.S_NUM + def.S_CIVIL_PVS.substr(0, 1)),
-        row1: _keysOf(def.S_CIVIL_PVS.substr(1, 11)),
-        row2: _keysOf(def.S_CIVIL_PVS.substr(12, 10)),
-        row3: _keysOf(def.S_CIVIL_PVS.substr(22, 9) + def.C_DEL),
+        row0: hlp.keysOf(def.S_NUM + def.S_CIVIL_PVS.substr(0, 1)),
+        row1: hlp.keysOf(def.S_CIVIL_PVS.substr(1, 11)),
+        row2: hlp.keysOf(def.S_CIVIL_PVS.substr(12, 10)),
+        row3: hlp.keysOf(def.S_CIVIL_PVS.substr(22, 9) + def.C_DEL),
     }, _LAYOUT_SPEC_FULL, 2);
 
+
     // 全键盘布局：
+    var _LAYOUT_FULL = "layout.f";
     frm.Cached.reg({
-        row0: _keysOf(def.S_CIVIL_PVS.substr(0, 10)), // "京津晋冀蒙辽吉黑沪苏"
-        row1: _keysOf(def.S_CIVIL_PVS.substr(10, 10)), // "浙皖闽赣鲁豫鄂湘粤桂"
-        row2: _keysOf(def.S_CIVIL_PVS.substr(20, 10)), // "琼渝川贵云藏陕甘青宁"
-        row3: _keysOf(def.S_CIVIL_PVS.substr(30, 1) + def.C_MIN + def.S_EMBASSY_PVS + def.C_W + def.S_ARMY_PVS.substr(0, 4)), // 新民使123WQVKH
-        row4: _keysOf(def.S_ARMY_PVS.substr(4, 9) + def.C_DEL)
+        row0: hlp.keysOf(def.S_CIVIL_PVS.substr(0, 10)), // "京津晋冀蒙辽吉黑沪苏"
+        row1: hlp.keysOf(def.S_CIVIL_PVS.substr(10, 10)), // "浙皖闽赣鲁豫鄂湘粤桂"
+        row2: hlp.keysOf(def.S_CIVIL_PVS.substr(20, 10)), // "琼渝川贵云藏陕甘青宁"
+        row3: hlp.keysOf(def.S_CIVIL_PVS.substr(30, 1) + def.C_MIN + def.S_EMBASSY_PVS + def.C_W + def.S_ARMY_PVS.substr(0, 4)), // 新民使123WQVKH
+        row4: hlp.keysOf(def.S_ARMY_PVS.substr(4, 9) + def.C_DEL)
     }, _LAYOUT_FULL, 0);
     frm.Cached.reg({
-        row0: _keysOf(def.S_NUM),
-        row1: _keysOf(def.S_Q_IOP),
-        row2: _keysOf(def.S_A_L),
-        row3: _keysOf(def.S_Z_M + def.C_XUE + def.C_HANG),
-        row4: _keysOf(def.S_HK_MACAO + def.S_POSTFIX_ZH + def.C_EMBASSY + def.C_DEL)
+        row0: hlp.keysOf(def.S_NUM),
+        row1: hlp.keysOf(def.S_Q_IOP),
+        row2: hlp.keysOf(def.S_A_L),
+        row3: hlp.keysOf(def.S_Z_M + def.C_XUE + def.C_HANG),
+        row4: hlp.keysOf(def.S_HK_MACAO + def.S_POSTFIX_ZH + def.C_EMBASSY + def.C_DEL)
     }, _LAYOUT_FULL, 1);
     frm.Cached.reg({
-        row0: _keysOf(def.S_NUM),
-        row1: _keysOf(def.S_Q_IOP),
-        row2: _keysOf(def.S_A_L),
-        row3: _keysOf(def.S_Z_M + def.C_XUE),
-        row4: _keysOf(def.S_HK_MACAO + def.S_POSTFIX_ZH + def.C_EMBASSY + def.C_DEL)
+        row0: hlp.keysOf(def.S_NUM),
+        row1: hlp.keysOf(def.S_Q_IOP),
+        row2: hlp.keysOf(def.S_A_L),
+        row3: hlp.keysOf(def.S_Z_M + def.C_XUE),
+        row4: hlp.keysOf(def.S_HK_MACAO + def.S_POSTFIX_ZH + def.C_EMBASSY + def.C_DEL)
     }, _LAYOUT_FULL, [2, 3, 4, 5, 6, 7]);
 
+    
     // 处理“民用+武警”的特殊键位2种情况:
     // 1 - 第一位键盘布局中，显示带武警字符的特殊布局:
     _GlobalConf.layoutProvider.reg(function(chain, args) {
@@ -230,23 +143,23 @@
     var _KEY_HK_MACAO = "keys.hk.macao";
     var _KEY_POSTFIX = "keys.postfix";
 
-    frm.Cached.reg(_keysOf(def.S_CIVIL_PVS + def.S_EMBASSY_PVS + def.C_W + def.S_ARMY_PVS + def.C_MIN), _KEY_ANY);
-    frm.Cached.reg(_keysOf(def.S_NUM), _KEY_NUMBRICS);
-    frm.Cached.reg(_keysOf(def.S_CHARS), _KEY_NUMBRICS_LETTERS);
-    frm.Cached.reg(_keysOf(def.S_CHARS + def.C_JING), _KEY_O_POLICE);
+    frm.Cached.reg(hlp.keysOf(def.S_CIVIL_PVS + def.S_EMBASSY_PVS + def.C_W + def.S_ARMY_PVS + def.C_MIN), _KEY_ANY);
+    frm.Cached.reg(hlp.keysOf(def.S_NUM), _KEY_NUMBRICS);
+    frm.Cached.reg(hlp.keysOf(def.S_CHARS), _KEY_NUMBRICS_LETTERS);
+    frm.Cached.reg(hlp.keysOf(def.S_CHARS + def.C_JING), _KEY_O_POLICE);
 
-    frm.Cached.reg(_keysOf(def.S_LETTERS + def.C_O), _KEY_CIVIL, 1);
-    frm.Cached.reg(_keysOf(def.S_ARMY_AREA), _KEY_ARMY, 1);
-    frm.Cached.reg(_keysOf(def.S_123), _KEY_EMBASSY, 1);
-    frm.Cached.reg(_keysOf(def.C_J), _KEY_WJ, 1);
-    frm.Cached.reg(_keysOf(def.C_HANG), _KEY_AVIATION, 1);
+    frm.Cached.reg(hlp.keysOf(def.S_LETTERS + def.C_O), _KEY_CIVIL, 1);
+    frm.Cached.reg(hlp.keysOf(def.S_ARMY_AREA), _KEY_ARMY, 1);
+    frm.Cached.reg(hlp.keysOf(def.S_123), _KEY_EMBASSY, 1);
+    frm.Cached.reg(hlp.keysOf(def.C_J), _KEY_WJ, 1);
+    frm.Cached.reg(hlp.keysOf(def.C_HANG), _KEY_AVIATION, 1);
 
-    frm.Cached.reg(_keysOf(def.S_NUM + def.S_CIVIL_PVS), _KEY_WJ, 2);
+    frm.Cached.reg(hlp.keysOf(def.S_NUM + def.S_CIVIL_PVS), _KEY_WJ, 2);
 
-    frm.Cached.reg(_keysOf(def.S_NUM + def.S_DF), _KEY_NUMERICS_DF);
-    frm.Cached.reg(_keysOf(def.S_HK_MACAO), _KEY_HK_MACAO);
-    frm.Cached.reg(_keysOf(def.S_CHARS + def.S_POSTFIX_ZH + def.C_XUE), _KEY_POSTFIX);
-    frm.Cached.reg(_keysOf(def.C_EMBASSY), _KEY_EMBASSY_ZH);
+    frm.Cached.reg(hlp.keysOf(def.S_NUM + def.S_DF), _KEY_NUMERICS_DF);
+    frm.Cached.reg(hlp.keysOf(def.S_HK_MACAO), _KEY_HK_MACAO);
+    frm.Cached.reg(hlp.keysOf(def.S_CHARS + def.S_POSTFIX_ZH + def.C_XUE), _KEY_POSTFIX);
+    frm.Cached.reg(hlp.keysOf(def.C_EMBASSY), _KEY_EMBASSY_ZH);
 
     // 注册键位提供器，序号：0
     _GlobalConf.keyProvider.reg(function(chain, args) {
@@ -383,7 +296,7 @@
             return ele.text;
         });
         return _mapLayout(layout, function(entity) {
-            return _keyOfEnabled(entity, _in(availables, entity.text));
+            return hlp.keyOfEnabled(entity, hlp.contains(availables, entity.text));
         });
     });
 
@@ -392,9 +305,9 @@
         return _mapLayout(layout, function(entity) {
             var enabled = entity.enabled;
             if (enabled && args.index === 0 && layout.numberType === def.NUM_TYPES.NEW_ENERGY) {
-                enabled = _isProvince(entity.text);
+                enabled = hlp.isProvince(entity.text);
             }
-            return _keyOfEnabled(entity, enabled);
+            return hlp.keyOfEnabled(entity, enabled);
         });
     });
 
@@ -403,9 +316,9 @@
         return _mapLayout(layout, function(entity) {
             // 注意,KeyEntity的KeyCode还是原始状态,尚未更新,不能使用它来判断是否是功能键
             if ("-" === entity.text) {
-                return _keyOfCode(entity, "" /* ← */ , def.KEY_TYPES.FUN_DEL);
+                return hlp.keyOfCode(entity, "" /* ← */ , def.KEY_TYPES.FUN_DEL);
             } else if ("+" === entity.text) {
-                return _keyOfCode(entity, "确定", def.KEY_TYPES.FUN_OK);
+                return hlp.keyOfCode(entity, "确定", def.KEY_TYPES.FUN_OK);
             } else {
                 return entity;
             }
@@ -417,7 +330,7 @@
         // 当输入车牌不为空时可以点击
         return _mapLayout(layout, function(entity){
                 if(entity.keyCode === def.KEY_TYPES.FUN_DEL){
-                    return _keyOfEnabled(entity, layout.numberLength != 0);
+                    return hlp.keyOfEnabled(entity, layout.numberLength != 0);
                 }else{
                     return entity;
                 }
@@ -429,7 +342,7 @@
         // 当输入车牌达到最后一位时可以点击
         return _mapLayout(layout, function(entity){
                 if(entity.keyCode === def.KEY_TYPES.FUN_OK){
-                    return _keyOfEnabled(entity, layout.numberLength === layout.numberLimitLength);
+                    return hlp.keyOfEnabled(entity, layout.numberLength === layout.numberLimitLength);
                 }else{
                     return entity;
                 }
@@ -478,7 +391,7 @@
         if (numberType === undefined || numberType !== parseInt(numberType, 10)) {
             throw new TypeError("参数(numberType)必须为整数数值");
         }
-        var detectedNumberType = detectNumberTypeOf(presetNumber);
+        var detectedNumberType = hlp.detectNumberTypeOf(presetNumber);
         // 如果预设车牌号码不为空，车牌类型为自动探测，则尝试
         var presetNumberType = numberType;
         if (presetNumber.length > 0 && numberType === def.NUM_TYPES.AUTO_DETECT) {
@@ -521,7 +434,7 @@
         this.config = _GlobalConf;
     };
     // 导出一些工具类函数
-    _export.$newKey = _keyOf;
+    _export.$newKey = hlp.keyOf;
     // 导出一些数据类型
     _export.NUM_TYPES = def.NUM_TYPES;
     _export.KEY_TYPES = def.KEY_TYPES;
