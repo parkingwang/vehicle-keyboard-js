@@ -164,7 +164,7 @@
     frm.Cached.reg(hlp.keysOf(def.S_CHARS + def.S_POSTFIX_ZH + def.C_XUE), _KEY_POSTFIX);
     frm.Cached.reg(hlp.keysOf(def.C_EMBASSY), _KEY_EMBASSY_ZH);
 
-    // 注册键位提供器，序号：0
+    // 键位提供器，Index：0
     _GlobalConf.keyProvider.reg(function(chain, args) {
         if (0 === args.index) {
             return frm.Cached.load(_KEY_ANY);
@@ -173,7 +173,7 @@
         }
     });
 
-    // 注册键位提供器，序号：1
+    // 键位提供器，Index：1
     _GlobalConf.keyProvider.reg(function(chain, args) {
         if (1 === args.index) {
             switch (args.numberType) {
@@ -190,7 +190,7 @@
         }
     });
 
-    // 注册键位提供器，序号：2
+    // 键位提供器，Index：2
     _GlobalConf.keyProvider.reg(function(chain, args) {
         if (2 === args.index) {
             switch (args.numberType) {
@@ -206,7 +206,7 @@
         }
     });
 
-    // 注册键位提供器，序号：3
+    // 键位提供器，Index：3
     _GlobalConf.keyProvider.reg(function(chain, args) {
         if (3 === args.index &&
             def.NUM_TYPES.EMBASSY === args.numberType) {
@@ -216,7 +216,7 @@
         }
     });
 
-    // 注册键位提供器，序号：4
+    // 键位提供器，Index：4
     _GlobalConf.keyProvider.reg(function(chain, args) {
         if ((4 === args.index || 5 === args.index) &&
             def.NUM_TYPES.NEW_ENERGY === args.numberType) {
@@ -226,7 +226,7 @@
         }
     });
 
-    // 注册键位提供器，序号：6
+    // 键位提供器，Index：6
     _GlobalConf.keyProvider.reg(function(chain, args) {
         if (6 === args.index) {
             var mode = args.numberType;
@@ -259,7 +259,7 @@
         return chain.next(args);
     });
 
-    // 注册键位提供器，序号：7
+    // 键位提供器，Index：7
     _GlobalConf.keyProvider.reg(function(chain, args) {
         if (7 === args.index && def.NUM_TYPES.NEW_ENERGY === args.numberType) {
             return frm.Cached.load(_KEY_NUMERICS_DF);
@@ -314,7 +314,7 @@
         });
     });
 
-    // 功能按钮的转换处理
+    // 功能按钮“确定、删除、更多”等按键的转换处理
     _GlobalConf.mixiner.reg(function(layout) {
         return _mapLayout(layout, function(entity) {
             // 注意,KeyEntity的KeyCode还是原始状态,尚未更新,不能使用它来判断是否是功能键
@@ -375,8 +375,13 @@
     }
 
     /**
+     * 键盘引擎的逻辑设计说明：
+     * 1. 由“键盘布局管理器”根据传入的键盘类型，返回对应的键盘布局。例如：民用键盘只显示省份，特定位置没有“警、使”等特殊车辆；
+     * 2. 由“可用键盘管理器”根据当前预设车牌号码，返回当前键位序号可用的键位。即，当前布局中哪些可点击，哪些不可点击。
+     * 3. 由混合器，将“键盘布局”和“可用键位”混合，输出键盘列表，由界面根据这些键位数据来渲染界面。
+     * 
      * @param {* keyboardType} 键盘类型
-     * @param {* inputIndex} 当前键位序号
+     * @param {* inputIndex} 当前键位Index
      * @param {* presetNumber} 预设车牌号码
      * @param {* numberType} 车牌号码类型
      */
