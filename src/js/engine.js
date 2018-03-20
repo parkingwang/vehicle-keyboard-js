@@ -87,8 +87,8 @@
         FULL: 0,
         // 民用
         CIVIL: 1,
-        // 民用+武警
-        CIVIL_WJ: 2
+        // 民用+特殊车辆
+        CIVIL_SPEC: 2
     };
 
     /** 
@@ -287,8 +287,8 @@
     ////// 注册布局提供器 START //////
 
     var _LAYOUT_CIVIL = "layout.c";
-    var _LAYOUT_WJ = "layout.w";
-    var _LAYOUT_WJ_FULL = "layout.w.f";
+    var _LAYOUT_SPEC = "layout.s";
+    var _LAYOUT_SPEC_FULL = "layout.s.f";
     var _LAYOUT_FULL = "layout.f";
 
     // 民用键盘布局：
@@ -311,26 +311,26 @@
         row3: _keysOf(_STR_Z_M + _STR_DEL_OK),
     }, _LAYOUT_CIVIL, [2, 3, 4, 5, 6, 7]);
 
-    // 民用+武警车牌布局：
+    // 民用+特殊车牌布局：
     Cached.reg({
         row0: _keysOf(_STR_CIVIL_PVS.substr(0, 9)), // "京津晋冀蒙辽吉黑沪"
         row1: _keysOf(_STR_CIVIL_PVS.substr(9, 9)), // "苏浙皖闽赣鲁豫鄂湘"
-        row2: _keysOf(_STR_CIVIL_PVS.substr(18, 8)), // "粤桂琼渝川贵云藏"
-        row3: _keysOf(_STR_CIVIL_PVS.substr(26, 5) + _CHAR_W + _STR_DEL_OK), // 陕甘青宁新W-+
-    }, _LAYOUT_WJ, 0);
+        row2: _keysOf(_STR_CIVIL_PVS.substr(18, 9)), // "粤桂琼渝川贵云藏"
+        row3: _keysOf(_STR_CIVIL_PVS.substr(25, 5) + _CHAR_EMBASSY +_CHAR_W + _STR_DEL_OK), // 陕甘青宁新使W-+
+    }, _LAYOUT_SPEC, 0);
     Cached.reg({
         row0: _keysOf(_STR_NUM + _STR_CIVIL_PVS.substr(0, 1)),
         row1: _keysOf(_STR_CIVIL_PVS.substr(1, 11)),
         row2: _keysOf(_STR_CIVIL_PVS.substr(12, 11)),
         row3: _keysOf(_STR_CIVIL_PVS.substr(22, 8) + _STR_DEL_OK),
-    }, _LAYOUT_WJ, 2);
+    }, _LAYOUT_SPEC, 2);
 
     Cached.reg({
         row0: _keysOf(_STR_NUM + _STR_CIVIL_PVS.substr(0, 1)),
         row1: _keysOf(_STR_CIVIL_PVS.substr(1, 11)),
         row2: _keysOf(_STR_CIVIL_PVS.substr(12, 10)),
         row3: _keysOf(_STR_CIVIL_PVS.substr(22, 9) + _CHAR_DEL),
-    }, _LAYOUT_WJ_FULL, 2);
+    }, _LAYOUT_SPEC_FULL, 2);
 
     // 全键盘布局：
     Cached.reg({
@@ -358,8 +358,8 @@
     // 处理“民用+武警”的特殊键位2种情况:
     // 1 - 第一位键盘布局中，显示带武警字符的特殊布局:
     _GlobalConf.layoutProvider.reg(function(chain, args) {
-        if (0 === args.index && args.keyboardType === KB_TYPES.CIVIL_WJ) {
-            return Cached.load(_LAYOUT_WJ, 0);
+        if (0 === args.index && args.keyboardType === KB_TYPES.CIVIL_SPEC) {
+            return Cached.load(_LAYOUT_SPEC, 0);
         } else {
             return chain.next(args);
         }
@@ -371,9 +371,9 @@
             args.keyboardType !== KB_TYPES.CIVIL &&
             (NUM_TYPES.WUJING === args.numberType || NUM_TYPES.WUJING_LOCAL === args.numberType)) {
             if (args.keyboardType === KB_TYPES.FULL) {
-                return Cached.load(_LAYOUT_WJ_FULL, 2);
+                return Cached.load(_LAYOUT_SPEC_FULL, 2);
             } else {
-                return Cached.load(_LAYOUT_WJ, 2);
+                return Cached.load(_LAYOUT_SPEC, 2);
             }
         } else {
             return chain.next(args);
@@ -643,7 +643,7 @@
      */
     function _update(keyboardType, inputIndex, presetNumber, numberType) {
         // 检查参数
-        if (keyboardType === undefined || keyboardType < KB_TYPES.FULL || keyboardType > KB_TYPES.CIVIL_WJ) {
+        if (keyboardType === undefined || keyboardType < KB_TYPES.FULL || keyboardType > KB_TYPES.CIVIL_SPEC) {
             throw new RangeError("参数(keyboardType)范围必须在[0, 2]之间，当前: " + keyboardType);
         }
         if (inputIndex === undefined || inputIndex !== parseInt(inputIndex, 10)) {
