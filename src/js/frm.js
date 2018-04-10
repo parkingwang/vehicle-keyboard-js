@@ -1,7 +1,7 @@
-(function (global, factory) {
+(function(global, factory) {
     module.exports = factory();
-}(this, (function () { 
-    "use strict";
+})(this, function() {
+    'use strict';
 
     // 定义一些处理键盘内部逻辑的框架类
     // Author: 陈哈哈 yoojiachen@gmail.com
@@ -13,16 +13,18 @@
             if (keys !== undefined && keys.constructor === Array) {
                 var cached = this._mcached;
                 keys.forEach(function(key) {
-                    cached[(category + ":" + key)] = layout;
+                    cached[category + ':' + key] = layout;
                 });
             } else {
-                var keyIdx = (keys === undefined ? 0 : keys);
-                this._mcached[(category + ":" + keyIdx)] = layout;
+                var keyIdx = keys === undefined ? 0 : keys;
+                this._mcached[category + ':' + keyIdx] = layout;
             }
         },
 
         load: function(category, key) {
-            return this._mcached[(category + ":" + (key === undefined ? 0 : key))];
+            return this._mcached[
+                category + ':' + (key === undefined ? 0 : key)
+            ];
         }
     };
 
@@ -34,7 +36,7 @@
 
             chain.next = function(args) {
                 if (_index <= _handlers.length) {
-                    return (_handlers[(_index++)])(chain, args); 
+                    return _handlers[_index++](chain, args);
                 } else {
                     return defVal;
                 }
@@ -77,9 +79,31 @@
         }
     };
 
+    var _Chain = {
+        _handlers: [],
+        reg: function(handler) {
+            this._handlers.push(handler);
+        },
+        process: function(args) {
+            var wrapper = this._handlers.reduceRight(
+                function(pre, cur) {
+                    return function() {
+                        return cur(args, pre);
+                    };
+                },
+                function() {
+                    return {};
+                }
+            );
+
+            return wrapper();
+        }
+    };
+
     return {
         Chain: Chain,
+        Chain2: Object.create(_Chain),
         Cached: Cached,
         Each: Each
-    }
-})));
+    };
+});
