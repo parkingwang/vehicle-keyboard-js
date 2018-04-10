@@ -9,16 +9,18 @@
     var frm = require("./frm.js")
     var def = require("./define.js")
     var hlp = require("./helper")
-
+    
     /** 全局配置 */
     var _GlobalConf = {
         // 键位提供器
         keyProvider: frm.Chain.create({}),
+        keyProvider2: frm.Chain2,
         // 布局提供器
         layoutProvider: frm.Chain.create({}),
         // 布局混合
         mixiner: frm.Each.create()
     };
+
 
     ////// 注册布局提供器 START //////
 
@@ -164,17 +166,17 @@
     frm.Cached.reg(hlp.keysOf(def.S_CHARS + def.S_POSTFIX_ZH + def.C_XUE), _KEY_POSTFIX);
     frm.Cached.reg(hlp.keysOf(def.C_EMBASSY), _KEY_EMBASSY_ZH);
 
+
     // 键位提供器，Index：0
-    _GlobalConf.keyProvider.reg(function(chain, args) {
+    _GlobalConf.keyProvider2.reg(function(args,next) {
         if (0 === args.index) {
             return frm.Cached.load(_KEY_ANY);
-        } else {
-            return chain.next(args);
-        }
+        } 
+        return next(args);
     });
 
     // 键位提供器，Index：1
-    _GlobalConf.keyProvider.reg(function(chain, args) {
+    _GlobalConf.keyProvider2.reg(function(args,next) {
         if (1 === args.index) {
             switch (args.numberType) {
                 case def.NUM_TYPES.ARMY: return frm.Cached.load(_KEY_ARMY, 1);
@@ -185,13 +187,13 @@
                 case def.NUM_TYPES.EMBASSY_NEW: return frm.Cached.load(_KEY_NUMBRICS);
                 default: return frm.Cached.load(_KEY_CIVIL, 1);
             }
-        } else {
-            return chain.next(args);
         }
+        return next();
+      
     });
 
     // 键位提供器，Index：2
-    _GlobalConf.keyProvider.reg(function(chain, args) {
+    _GlobalConf.keyProvider2.reg(function(args,next) {
         if (2 === args.index) {
             switch (args.numberType) {
                 case def.NUM_TYPES.WUJING:
@@ -201,33 +203,31 @@
                 case def.NUM_TYPES.NEW_ENERGY: return frm.Cached.load(_KEY_NUMERICS_DF);
                 default: return frm.Cached.load(_KEY_NUMBRICS_LETTERS);
             }
-        } else {
-            return chain.next(args);
         }
+        return next();
+        
     });
 
     // 键位提供器，Index：3
-    _GlobalConf.keyProvider.reg(function(chain, args) {
+    _GlobalConf.keyProvider2.reg(function(args,next) {
         if (3 === args.index &&
             def.NUM_TYPES.EMBASSY === args.numberType) {
             return frm.Cached.load(_KEY_NUMBRICS);
-        } else {
-            return chain.next(args);
-        }
+        } 
+        return next();
     });
 
     // 键位提供器，Index：4
-    _GlobalConf.keyProvider.reg(function(chain, args) {
+    _GlobalConf.keyProvider2.reg(function(args,next) {
         if ((4 === args.index || 5 === args.index) &&
             def.NUM_TYPES.NEW_ENERGY === args.numberType) {
             return frm.Cached.load(_KEY_NUMBRICS);
-        } else {
-            return chain.next(args);
-        }
+        } 
+        return next();
     });
 
     // 键位提供器，Index：6
-    _GlobalConf.keyProvider.reg(function(chain, args) {
+    _GlobalConf.keyProvider2.reg(function(args,next) {
         if (6 === args.index) {
             var mode = args.numberType;
             switch (args.numberType) {
@@ -256,19 +256,19 @@
                     }
             }
         }
-        return chain.next(args);
+        return next();
     });
 
     // 键位提供器，Index：7
-    _GlobalConf.keyProvider.reg(function(chain, args) {
+    _GlobalConf.keyProvider2.reg(function(args,next) {
         if (7 === args.index && def.NUM_TYPES.NEW_ENERGY === args.numberType) {
             return frm.Cached.load(_KEY_NUMERICS_DF);
         }
-        return chain.next(args);
+        return next();
     });
 
     // 注册键位提供器，默认
-    _GlobalConf.keyProvider.reg(function() {
+    _GlobalConf.keyProvider2.reg(function() {
         return frm.Cached.load(_KEY_NUMBRICS_LETTERS);
     });
 
@@ -431,7 +431,8 @@
         output.numberLength = presetLength;
         output.numberLimitLength = limitLength;
         // 处理键位
-        args.keys = _GlobalConf.keyProvider.process(args);
+        args.keys = _GlobalConf.keyProvider2.process(args);
+
         // 混合布局与键位
         return _GlobalConf.mixiner.process(output, args);
     }

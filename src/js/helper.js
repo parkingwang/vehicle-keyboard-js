@@ -52,7 +52,7 @@ export function contains(src, item) {
     return src.indexOf(item) >= 0;
 }
 
-function isProvince(str) {
+export function isProvince(str) {
     return contains(def.S_CIVIL_PVS, str);
 }
 
