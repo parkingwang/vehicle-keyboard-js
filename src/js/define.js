@@ -42,10 +42,10 @@
         AUTO_DETECT: 0,
         // 民用车牌
         CIVIL: 1,
-        // 武警总队
-        WUJING: 2,
-        // 武警地方
-        WUJING_LOCAL: 3,
+        // 2007武警
+        WJ2007: 2,
+        // 2012武警
+        WJ2012: 3,
         // 军队车牌
         ARMY: 4,
         // 新能源车牌
@@ -62,8 +62,8 @@
                 case 1: return "UNKNOWN";
                 case 0: return "AUTO_DETECT";
                 case 1: return "CIVIL";
-                case 2: return "WUJING";
-                case 3: return "WUJING_LOCAL";
+                case 2: return "WJ2007";
+                case 3: return "WJ2012";
                 case 4: return "ARMY";
                 case 5: return "NEW_ENERGY";
                 case 6: return "EMBASSY";

@@ -73,9 +73,9 @@ export function detectNumberTypeOf(presetNumber) {
         } else if (def.C_W === first) {
             if (presetNumber.length >= 3 && 
                 isProvince(presetNumber.charAt(2))) {
-                    return def.NUM_TYPES.WUJING_LOCAL;
+                    return def.NUM_TYPES.WJ2012;
             } else {
-                return def.NUM_TYPES.WUJING;
+                return def.NUM_TYPES.WJ2007;
             }
         } else if (isProvince(first)) {
             if (presetNumber.length === 8) {

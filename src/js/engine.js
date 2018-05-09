@@ -108,7 +108,7 @@
     _GlobalConf.layoutProvider.reg(function(chain, args) {
         if (2 === args.index &&
             args.keyboardType !== def.KB_TYPES.CIVIL &&
-            (def.NUM_TYPES.WUJING === args.numberType || def.NUM_TYPES.WUJING_LOCAL === args.numberType)) {
+            (def.NUM_TYPES.WJ2007 === args.numberType || def.NUM_TYPES.WJ2012 === args.numberType)) {
             if (args.keyboardType === def.KB_TYPES.FULL) {
                 return frm.Cached.load(_LAYOUT_SPEC_FULL, 2);
             } else {
@@ -178,8 +178,8 @@
         if (1 === args.index) {
             switch (args.numberType) {
                 case def.NUM_TYPES.ARMY: return frm.Cached.load(_KEY_ARMY, 1);
-                case def.NUM_TYPES.WUJING:
-                case def.NUM_TYPES.WUJING_LOCAL: return frm.Cached.load(_KEY_WJ, 1);
+                case def.NUM_TYPES.WJ2007:
+                case def.NUM_TYPES.WJ2012: return frm.Cached.load(_KEY_WJ, 1);
                 case def.NUM_TYPES.AVIATION: return frm.Cached.load(_KEY_AVIATION, 1);
                 case def.NUM_TYPES.EMBASSY: return frm.Cached.load(_KEY_EMBASSY, 1);
                 case def.NUM_TYPES.EMBASSY_NEW: return frm.Cached.load(_KEY_NUMBRICS);
@@ -194,8 +194,8 @@
     _GlobalConf.keyProvider.reg(function(chain, args) {
         if (2 === args.index) {
             switch (args.numberType) {
-                case def.NUM_TYPES.WUJING:
-                case def.NUM_TYPES.WUJING_LOCAL: return frm.Cached.load(_KEY_WJ, 2);
+                case def.NUM_TYPES.WJ2007:
+                case def.NUM_TYPES.WJ2012: return frm.Cached.load(_KEY_WJ, 2);
                 case def.NUM_TYPES.EMBASSY:
                 case def.NUM_TYPES.EMBASSY_NEW: return frm.Cached.load(_KEY_NUMBRICS);
                 case def.NUM_TYPES.NEW_ENERGY: return frm.Cached.load(_KEY_NUMERICS_DF);
@@ -234,9 +234,9 @@
                 case def.NUM_TYPES.NEW_ENERGY: return frm.Cached.load(_KEY_NUMBRICS);
                 case def.NUM_TYPES.ARMY:
                 case def.NUM_TYPES.EMBASSY:
-                case def.NUM_TYPES.WUJING:
+                case def.NUM_TYPES.WJ2007:
                 case def.NUM_TYPES.AVIATION:
-                case def.NUM_TYPES.WUJING_LOCAL: return frm.Cached.load(_KEY_NUMBRICS_LETTERS);
+                case def.NUM_TYPES.WJ2012: return frm.Cached.load(_KEY_NUMBRICS_LETTERS);
                 case def.NUM_TYPES.EMBASSY_NEW: return frm.Cached.load(_KEY_EMBASSY_ZH);
                 default:
                     var cityCode = args.number.charAt(1);
