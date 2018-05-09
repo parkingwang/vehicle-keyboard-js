@@ -62,8 +62,8 @@ export function detectNumberTypeOf(presetNumber) {
         return def.NUM_TYPES.AUTO_DETECT;
     } else {
         var first = presetNumber.charAt(0);
-        if (contains(def.S_ARMY_PVS, first)) {
-            return def.NUM_TYPES.ARMY;
+        if (contains(def.S_PLA2012_PVS, first)) {
+            return def.NUM_TYPES.PLA2012;
         } else if (def.C_EMBASSY === first) {
             return def.NUM_TYPES.EMBASSY;
         } else if (def.C_MIN === first) {

@@ -75,8 +75,8 @@
         row0: hlp.keysOf(def.S_CIVIL_PVS.substr(0, 10)), // "京津晋冀蒙辽吉黑沪苏"
         row1: hlp.keysOf(def.S_CIVIL_PVS.substr(10, 10)), // "浙皖闽赣鲁豫鄂湘粤桂"
         row2: hlp.keysOf(def.S_CIVIL_PVS.substr(20, 10)), // "琼渝川贵云藏陕甘青宁"
-        row3: hlp.keysOf(def.S_CIVIL_PVS.substr(30, 1) + def.C_MIN + def.S_EMBASSY_PVS + def.C_W + def.S_ARMY_PVS.substr(0, 4)), // 新民使123WQVKH
-        row4: hlp.keysOf(def.S_ARMY_PVS.substr(4, 9) + def.C_DEL)
+        row3: hlp.keysOf(def.S_CIVIL_PVS.substr(30, 1) + def.C_MIN + def.S_EMBASSY_PVS + def.C_W + def.S_PLA2012_PVS.substr(0, 4)), // 新民使123WQVKH
+        row4: hlp.keysOf(def.S_PLA2012_PVS.substr(4, 9) + def.C_DEL)
     }, _LAYOUT_FULL, 0);
     frm.Cached.reg({
         row0: hlp.keysOf(def.S_NUM),
@@ -134,7 +134,7 @@
 
     var _KEY_ANY = "keys.any";
     var _KEY_CIVIL = "keys.civil";
-    var _KEY_ARMY = "keys.army";
+    var _KEY_PLA2012 = "keys.army";
     var _KEY_WJ = "keys.wj";
     var _KEY_AVIATION = "keys.aviation";
     var _KEY_EMBASSY = "keys.embassy";
@@ -146,13 +146,13 @@
     var _KEY_HK_MACAO = "keys.hk.macao";
     var _KEY_POSTFIX = "keys.postfix";
 
-    frm.Cached.reg(hlp.keysOf(def.S_CIVIL_PVS + def.S_EMBASSY_PVS + def.C_W + def.S_ARMY_PVS + def.C_MIN), _KEY_ANY);
+    frm.Cached.reg(hlp.keysOf(def.S_CIVIL_PVS + def.S_EMBASSY_PVS + def.C_W + def.S_PLA2012_PVS + def.C_MIN), _KEY_ANY);
     frm.Cached.reg(hlp.keysOf(def.S_NUM), _KEY_NUMBRICS);
     frm.Cached.reg(hlp.keysOf(def.S_CHARS), _KEY_NUMBRICS_LETTERS);
     frm.Cached.reg(hlp.keysOf(def.S_CHARS + def.C_JING), _KEY_O_POLICE);
 
     frm.Cached.reg(hlp.keysOf(def.S_LETTERS + def.C_O), _KEY_CIVIL, 1);
-    frm.Cached.reg(hlp.keysOf(def.S_ARMY_AREA), _KEY_ARMY, 1);
+    frm.Cached.reg(hlp.keysOf(def.S_PLA2012_AREA), _KEY_PLA2012, 1);
     frm.Cached.reg(hlp.keysOf(def.S_123), _KEY_EMBASSY, 1);
     frm.Cached.reg(hlp.keysOf(def.C_J), _KEY_WJ, 1);
     frm.Cached.reg(hlp.keysOf(def.C_HANG), _KEY_AVIATION, 1);
@@ -177,7 +177,7 @@
     _GlobalConf.keyProvider.reg(function(chain, args) {
         if (1 === args.index) {
             switch (args.numberType) {
-                case def.NUM_TYPES.ARMY: return frm.Cached.load(_KEY_ARMY, 1);
+                case def.NUM_TYPES.PLA2012: return frm.Cached.load(_KEY_PLA2012, 1);
                 case def.NUM_TYPES.WJ2007:
                 case def.NUM_TYPES.WJ2012: return frm.Cached.load(_KEY_WJ, 1);
                 case def.NUM_TYPES.AVIATION: return frm.Cached.load(_KEY_AVIATION, 1);
@@ -232,7 +232,7 @@
             var mode = args.numberType;
             switch (args.numberType) {
                 case def.NUM_TYPES.NEW_ENERGY: return frm.Cached.load(_KEY_NUMBRICS);
-                case def.NUM_TYPES.ARMY:
+                case def.NUM_TYPES.PLA2012:
                 case def.NUM_TYPES.EMBASSY:
                 case def.NUM_TYPES.WJ2007:
                 case def.NUM_TYPES.AVIATION:

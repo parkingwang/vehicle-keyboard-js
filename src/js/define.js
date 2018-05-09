@@ -47,7 +47,7 @@
         // 2012武警
         WJ2012: 3,
         // 军队车牌
-        ARMY: 4,
+        PLA2012: 4,
         // 新能源车牌
         NEW_ENERGY: 5,
         // 大使馆车牌
@@ -64,7 +64,7 @@
                 case 1: return "CIVIL";
                 case 2: return "WJ2007";
                 case 3: return "WJ2012";
-                case 4: return "ARMY";
+                case 4: return "PLA2012";
                 case 5: return "NEW_ENERGY";
                 case 6: return "EMBASSY";
                 case 7: return "EMBASSY_NEW";
@@ -100,8 +100,8 @@
         NUM_TYPES: NUM_TYPES,
 
         S_CIVIL_PVS: _PVS,
-        S_ARMY_PVS: "QVKHBSLJNGCEZ",
-        S_ARMY_AREA: "ABCDEFGHJKLMNOPRSTUVXY",
+        S_PLA2012_PVS: "QVKHBSLJNGCEZ",
+        S_PLA2012_AREA: "ABCDEFGHJKLMNOPRSTUVXY",
         S_NUM: _NUM,
         S_LETTERS: _LETTERS,
         S_CHARS: _NUM + _LETTERS,
