@@ -43,7 +43,7 @@
         // 民用车牌
         CIVIL: 1,
         // 2007武警
-        WJ2007: 2,
+        // WJ2007: 2,
         // 2012武警
         WJ2012: 3,
         // 2012军队车牌
@@ -62,7 +62,7 @@
                 case 1: return "UNKNOWN";
                 case 0: return "AUTO_DETECT";
                 case 1: return "CIVIL";
-                case 2: return "WJ2007";
+                //case 2: return "WJ2007";
                 case 3: return "WJ2012";
                 case 4: return "PLA2012";
                 case 5: return "NEW_ENERGY";

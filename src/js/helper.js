@@ -71,12 +71,7 @@ export function detectNumberTypeOf(presetNumber) {
         } else if (contains(def.S_123, first)) {
             return def.NUM_TYPES.SHI2017;
         } else if (def.C_W === first) {
-            if (presetNumber.length >= 3 && 
-                isProvince(presetNumber.charAt(2))) {
-                    return def.NUM_TYPES.WJ2012;
-            } else {
-                return def.NUM_TYPES.WJ2007;
-            }
+            return def.NUM_TYPES.WJ2012;
         } else if (isProvince(first)) {
             if (presetNumber.length === 8) {
                 // 新能源车牌：

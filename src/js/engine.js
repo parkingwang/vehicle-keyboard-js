@@ -47,7 +47,6 @@
 
     // 民用+特殊车牌布局：
     var _LAYOUT_SPEC = "layout.s";
-    var _LAYOUT_SPEC_FULL = "layout.s.f";
     frm.Cached.reg({
         row0: hlp.keysOf(def.S_CIVIL_PVS.substr(0, 9)), // "京津晋冀蒙辽吉黑沪"
         row1: hlp.keysOf(def.S_CIVIL_PVS.substr(9, 9)), // "苏浙皖闽赣鲁豫鄂湘"
@@ -60,13 +59,6 @@
         row2: hlp.keysOf(def.S_CIVIL_PVS.substr(12, 11)),
         row3: hlp.keysOf(def.S_CIVIL_PVS.substr(22, 8) + def.S_DEL_OK),
     }, _LAYOUT_SPEC, 2);
-
-    frm.Cached.reg({
-        row0: hlp.keysOf(def.S_NUM + def.S_CIVIL_PVS.substr(0, 1)),
-        row1: hlp.keysOf(def.S_CIVIL_PVS.substr(1, 11)),
-        row2: hlp.keysOf(def.S_CIVIL_PVS.substr(12, 10)),
-        row3: hlp.keysOf(def.S_CIVIL_PVS.substr(22, 9) + def.C_DEL),
-    }, _LAYOUT_SPEC_FULL, 2);
 
 
     // 全键盘布局：
@@ -107,10 +99,9 @@
     // 2 - 第二位键盘布局中，当输入的车牌为武警车牌时，才显示武警特殊布局:
     _GlobalConf.layoutProvider.reg(function(chain, args) {
         if (2 === args.index &&
-            args.keyboardType !== def.KB_TYPES.CIVIL &&
-            (def.NUM_TYPES.WJ2007 === args.numberType || def.NUM_TYPES.WJ2012 === args.numberType)) {
+            args.keyboardType !== def.KB_TYPES.CIVIL && def.NUM_TYPES.WJ2012 === args.numberType) {
             if (args.keyboardType === def.KB_TYPES.FULL) {
-                return frm.Cached.load(_LAYOUT_SPEC_FULL, 2);
+                return frm.Cached.load(_LAYOUT_CIVIL, 0);
             } else {
                 return frm.Cached.load(_LAYOUT_SPEC, 2);
             }
@@ -134,11 +125,11 @@
 
     var _KEY_ANY = "keys.any";
     var _KEY_CIVIL = "keys.civil";
-    var _KEY_PLA2012 = "keys.army";
+    var _KEY_PLA2012 = "keys.PLA2012";
     var _KEY_WJ = "keys.wj";
     var _KEY_AVIATION = "keys.aviation";
-    var _KEY_SHI2007 = "keys.embassy";
-    var _KEY_SHI2007_ZH = "keys.embassy.zh";
+    var _KEY_SHI2007 = "keys.shi";
+    var _KEY_SHI2007_ZH = "keys.shi.zh";
     var _KEY_NUMBRICS = "keys.num";
     var _KEY_NUMBRICS_LETTERS = "keys.num.letters";
     var _KEY_O_POLICE = "keys.O.police";
@@ -178,7 +169,6 @@
         if (1 === args.index) {
             switch (args.numberType) {
                 case def.NUM_TYPES.PLA2012: return frm.Cached.load(_KEY_PLA2012, 1);
-                case def.NUM_TYPES.WJ2007:
                 case def.NUM_TYPES.WJ2012: return frm.Cached.load(_KEY_WJ, 1);
                 case def.NUM_TYPES.AVIATION: return frm.Cached.load(_KEY_AVIATION, 1);
                 case def.NUM_TYPES.SHI2007: return frm.Cached.load(_KEY_SHI2007, 1);
@@ -194,7 +184,6 @@
     _GlobalConf.keyProvider.reg(function(chain, args) {
         if (2 === args.index) {
             switch (args.numberType) {
-                case def.NUM_TYPES.WJ2007:
                 case def.NUM_TYPES.WJ2012: return frm.Cached.load(_KEY_WJ, 2);
                 case def.NUM_TYPES.SHI2007:
                 case def.NUM_TYPES.SHI2017: return frm.Cached.load(_KEY_NUMBRICS);
@@ -234,7 +223,6 @@
                 case def.NUM_TYPES.NEW_ENERGY: return frm.Cached.load(_KEY_NUMBRICS);
                 case def.NUM_TYPES.PLA2012:
                 case def.NUM_TYPES.SHI2007:
-                case def.NUM_TYPES.WJ2007:
                 case def.NUM_TYPES.AVIATION:
                 case def.NUM_TYPES.WJ2012: return frm.Cached.load(_KEY_NUMBRICS_LETTERS);
                 case def.NUM_TYPES.SHI2017: return frm.Cached.load(_KEY_SHI2007_ZH);

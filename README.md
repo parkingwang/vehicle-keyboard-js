@@ -67,6 +67,15 @@ Android、iOS目前版本会依赖此内核文件，使用其`native_update_keyb
 
 # 四、版本更新记录
 
+### v2017.0509
+
+- 更新车牌类型名称：
+ - ARMY -> PLA2012
+ - WUJING_LOCAL -> WJ2012
+ - EMBASSY -> SHI2007
+ - EMBASSY_NEW -> SHI2017
+- 删除武警2007式车牌输入方式；
+
 ### v2017.0320
 
 - 修改快捷省份按键样式；
