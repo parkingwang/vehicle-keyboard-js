@@ -46,14 +46,14 @@
         WJ2007: 2,
         // 2012武警
         WJ2012: 3,
-        // 军队车牌
+        // 2012军队车牌
         PLA2012: 4,
         // 新能源车牌
         NEW_ENERGY: 5,
-        // 大使馆车牌
-        EMBASSY: 6,
-        // 新大使馆车牌
-        EMBASSY_NEW: 7,
+        // 2007大使馆车牌
+        SHI2007: 6,
+        // 2017新大使馆车牌
+        SHI2017: 7,
         // 民航摆渡车
         AVIATION: 8,
 
@@ -66,8 +66,8 @@
                 case 3: return "WJ2012";
                 case 4: return "PLA2012";
                 case 5: return "NEW_ENERGY";
-                case 6: return "EMBASSY";
-                case 7: return "EMBASSY_NEW";
+                case 6: return "SHI2007";
+                case 7: return "SHI2017";
                 case 8: return "AVIATION";
                 default: return "UNKNOWN";
             }
@@ -75,7 +75,7 @@
 
         lenOf: function(mode){
             switch(mode){
-                case 3/*武警地方*/:
+                case 3/*2012武警*/:
                 case 5/*新能源*/: return 8;
                 default: return 7;
             }
@@ -88,7 +88,7 @@
     var _JING = "警";
     var _123 = "123";
     var _DF = "DF";
-    var _EMBASSY = "使";
+    var _SHI2007 = "使";
     var _HK = "港";
     var _MACAO = "澳";
     var _DEL = "-";
@@ -105,7 +105,7 @@
         S_NUM: _NUM,
         S_LETTERS: _LETTERS,
         S_CHARS: _NUM + _LETTERS,
-        C_EMBASSY: _EMBASSY,
+        C_SHI2007: _SHI2007,
         C_HK: _HK,
         C_MACAO: _MACAO,
         C_XUE: "学",
@@ -125,7 +125,7 @@
         S_A_L: "ASDFGHJKL",
         S_Z_M: "ZXCVBNM",
         S_HK_MACAO: _HK + _MACAO,
-        S_EMBASSY_PVS: _EMBASSY + _123,
+        S_SHI2007_PVS: _SHI2007 + _123,
         C_DEL: _DEL,
         C_OK: _OK,
         C_MORE: "=",

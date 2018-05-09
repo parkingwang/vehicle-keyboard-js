@@ -52,7 +52,7 @@
         row0: hlp.keysOf(def.S_CIVIL_PVS.substr(0, 9)), // "京津晋冀蒙辽吉黑沪"
         row1: hlp.keysOf(def.S_CIVIL_PVS.substr(9, 9)), // "苏浙皖闽赣鲁豫鄂湘"
         row2: hlp.keysOf(def.S_CIVIL_PVS.substr(18, 9)), // "粤桂琼渝川贵云藏"
-        row3: hlp.keysOf(def.S_CIVIL_PVS.substr(25, 5) + def.C_EMBASSY +def.C_W + def.S_DEL_OK), // 陕甘青宁新使W-+
+        row3: hlp.keysOf(def.S_CIVIL_PVS.substr(25, 5) + def.C_SHI2007 +def.C_W + def.S_DEL_OK), // 陕甘青宁新使W-+
     }, _LAYOUT_SPEC, 0);
     frm.Cached.reg({
         row0: hlp.keysOf(def.S_NUM + def.S_CIVIL_PVS.substr(0, 1)),
@@ -75,7 +75,7 @@
         row0: hlp.keysOf(def.S_CIVIL_PVS.substr(0, 10)), // "京津晋冀蒙辽吉黑沪苏"
         row1: hlp.keysOf(def.S_CIVIL_PVS.substr(10, 10)), // "浙皖闽赣鲁豫鄂湘粤桂"
         row2: hlp.keysOf(def.S_CIVIL_PVS.substr(20, 10)), // "琼渝川贵云藏陕甘青宁"
-        row3: hlp.keysOf(def.S_CIVIL_PVS.substr(30, 1) + def.C_MIN + def.S_EMBASSY_PVS + def.C_W + def.S_PLA2012_PVS.substr(0, 4)), // 新民使123WQVKH
+        row3: hlp.keysOf(def.S_CIVIL_PVS.substr(30, 1) + def.C_MIN + def.S_SHI2007_PVS + def.C_W + def.S_PLA2012_PVS.substr(0, 4)), // 新民使123WQVKH
         row4: hlp.keysOf(def.S_PLA2012_PVS.substr(4, 9) + def.C_DEL)
     }, _LAYOUT_FULL, 0);
     frm.Cached.reg({
@@ -83,14 +83,14 @@
         row1: hlp.keysOf(def.S_Q_IOP),
         row2: hlp.keysOf(def.S_A_L),
         row3: hlp.keysOf(def.S_Z_M + def.C_XUE + def.C_HANG),
-        row4: hlp.keysOf(def.S_HK_MACAO + def.S_POSTFIX_ZH + def.C_EMBASSY + def.C_DEL)
+        row4: hlp.keysOf(def.S_HK_MACAO + def.S_POSTFIX_ZH + def.C_SHI2007 + def.C_DEL)
     }, _LAYOUT_FULL, 1);
     frm.Cached.reg({
         row0: hlp.keysOf(def.S_NUM),
         row1: hlp.keysOf(def.S_Q_IOP),
         row2: hlp.keysOf(def.S_A_L),
         row3: hlp.keysOf(def.S_Z_M + def.C_XUE),
-        row4: hlp.keysOf(def.S_HK_MACAO + def.S_POSTFIX_ZH + def.C_EMBASSY + def.C_DEL)
+        row4: hlp.keysOf(def.S_HK_MACAO + def.S_POSTFIX_ZH + def.C_SHI2007 + def.C_DEL)
     }, _LAYOUT_FULL, [2, 3, 4, 5, 6, 7]);
 
     
@@ -137,8 +137,8 @@
     var _KEY_PLA2012 = "keys.army";
     var _KEY_WJ = "keys.wj";
     var _KEY_AVIATION = "keys.aviation";
-    var _KEY_EMBASSY = "keys.embassy";
-    var _KEY_EMBASSY_ZH = "keys.embassy.zh";
+    var _KEY_SHI2007 = "keys.embassy";
+    var _KEY_SHI2007_ZH = "keys.embassy.zh";
     var _KEY_NUMBRICS = "keys.num";
     var _KEY_NUMBRICS_LETTERS = "keys.num.letters";
     var _KEY_O_POLICE = "keys.O.police";
@@ -146,14 +146,14 @@
     var _KEY_HK_MACAO = "keys.hk.macao";
     var _KEY_POSTFIX = "keys.postfix";
 
-    frm.Cached.reg(hlp.keysOf(def.S_CIVIL_PVS + def.S_EMBASSY_PVS + def.C_W + def.S_PLA2012_PVS + def.C_MIN), _KEY_ANY);
+    frm.Cached.reg(hlp.keysOf(def.S_CIVIL_PVS + def.S_SHI2007_PVS + def.C_W + def.S_PLA2012_PVS + def.C_MIN), _KEY_ANY);
     frm.Cached.reg(hlp.keysOf(def.S_NUM), _KEY_NUMBRICS);
     frm.Cached.reg(hlp.keysOf(def.S_CHARS), _KEY_NUMBRICS_LETTERS);
     frm.Cached.reg(hlp.keysOf(def.S_CHARS + def.C_JING), _KEY_O_POLICE);
 
     frm.Cached.reg(hlp.keysOf(def.S_LETTERS + def.C_O), _KEY_CIVIL, 1);
     frm.Cached.reg(hlp.keysOf(def.S_PLA2012_AREA), _KEY_PLA2012, 1);
-    frm.Cached.reg(hlp.keysOf(def.S_123), _KEY_EMBASSY, 1);
+    frm.Cached.reg(hlp.keysOf(def.S_123), _KEY_SHI2007, 1);
     frm.Cached.reg(hlp.keysOf(def.C_J), _KEY_WJ, 1);
     frm.Cached.reg(hlp.keysOf(def.C_HANG), _KEY_AVIATION, 1);
 
@@ -162,7 +162,7 @@
     frm.Cached.reg(hlp.keysOf(def.S_NUM + def.S_DF), _KEY_NUMERICS_DF);
     frm.Cached.reg(hlp.keysOf(def.S_HK_MACAO), _KEY_HK_MACAO);
     frm.Cached.reg(hlp.keysOf(def.S_CHARS + def.S_POSTFIX_ZH + def.C_XUE), _KEY_POSTFIX);
-    frm.Cached.reg(hlp.keysOf(def.C_EMBASSY), _KEY_EMBASSY_ZH);
+    frm.Cached.reg(hlp.keysOf(def.C_SHI2007), _KEY_SHI2007_ZH);
 
     // 键位提供器，Index：0
     _GlobalConf.keyProvider.reg(function(chain, args) {
@@ -181,8 +181,8 @@
                 case def.NUM_TYPES.WJ2007:
                 case def.NUM_TYPES.WJ2012: return frm.Cached.load(_KEY_WJ, 1);
                 case def.NUM_TYPES.AVIATION: return frm.Cached.load(_KEY_AVIATION, 1);
-                case def.NUM_TYPES.EMBASSY: return frm.Cached.load(_KEY_EMBASSY, 1);
-                case def.NUM_TYPES.EMBASSY_NEW: return frm.Cached.load(_KEY_NUMBRICS);
+                case def.NUM_TYPES.SHI2007: return frm.Cached.load(_KEY_SHI2007, 1);
+                case def.NUM_TYPES.SHI2017: return frm.Cached.load(_KEY_NUMBRICS);
                 default: return frm.Cached.load(_KEY_CIVIL, 1);
             }
         } else {
@@ -196,8 +196,8 @@
             switch (args.numberType) {
                 case def.NUM_TYPES.WJ2007:
                 case def.NUM_TYPES.WJ2012: return frm.Cached.load(_KEY_WJ, 2);
-                case def.NUM_TYPES.EMBASSY:
-                case def.NUM_TYPES.EMBASSY_NEW: return frm.Cached.load(_KEY_NUMBRICS);
+                case def.NUM_TYPES.SHI2007:
+                case def.NUM_TYPES.SHI2017: return frm.Cached.load(_KEY_NUMBRICS);
                 case def.NUM_TYPES.NEW_ENERGY: return frm.Cached.load(_KEY_NUMERICS_DF);
                 default: return frm.Cached.load(_KEY_NUMBRICS_LETTERS);
             }
@@ -209,7 +209,7 @@
     // 键位提供器，Index：3
     _GlobalConf.keyProvider.reg(function(chain, args) {
         if (3 === args.index &&
-            def.NUM_TYPES.EMBASSY === args.numberType) {
+            def.NUM_TYPES.SHI2007 === args.numberType) {
             return frm.Cached.load(_KEY_NUMBRICS);
         } else {
             return chain.next(args);
@@ -233,11 +233,11 @@
             switch (args.numberType) {
                 case def.NUM_TYPES.NEW_ENERGY: return frm.Cached.load(_KEY_NUMBRICS);
                 case def.NUM_TYPES.PLA2012:
-                case def.NUM_TYPES.EMBASSY:
+                case def.NUM_TYPES.SHI2007:
                 case def.NUM_TYPES.WJ2007:
                 case def.NUM_TYPES.AVIATION:
                 case def.NUM_TYPES.WJ2012: return frm.Cached.load(_KEY_NUMBRICS_LETTERS);
-                case def.NUM_TYPES.EMBASSY_NEW: return frm.Cached.load(_KEY_EMBASSY_ZH);
+                case def.NUM_TYPES.SHI2017: return frm.Cached.load(_KEY_SHI2007_ZH);
                 default:
                     var cityCode = args.number.charAt(1);
                     // “粤O” 之类的警车号牌
@@ -447,7 +447,7 @@
     _export.NUM_TYPES = def.NUM_TYPES;
     _export.KEY_TYPES = def.KEY_TYPES;
     _export.KEYBOARD_TYPES = def.KB_TYPES;
-    _export.VERSION = "R1.1/2018.0320/iRain(SZ)";
+    _export.VERSION = "R1.2/2018.0509/iRain(SZ)";
 
     return _export;
 

@@ -64,12 +64,12 @@ export function detectNumberTypeOf(presetNumber) {
         var first = presetNumber.charAt(0);
         if (contains(def.S_PLA2012_PVS, first)) {
             return def.NUM_TYPES.PLA2012;
-        } else if (def.C_EMBASSY === first) {
-            return def.NUM_TYPES.EMBASSY;
+        } else if (def.C_SHI2007 === first) {
+            return def.NUM_TYPES.SHI2007;
         } else if (def.C_MIN === first) {
             return def.NUM_TYPES.AVIATION;
         } else if (contains(def.S_123, first)) {
-            return def.NUM_TYPES.EMBASSY_NEW;
+            return def.NUM_TYPES.SHI2017;
         } else if (def.C_W === first) {
             if (presetNumber.length >= 3 && 
                 isProvince(presetNumber.charAt(2))) {
