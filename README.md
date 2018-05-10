@@ -56,9 +56,8 @@ Android、iOS目前版本会依赖此内核文件，使用其`native_update_keyb
 
 ## 3.2 车牌号码规则
 
-1. 本公司整理的车牌号码规则：[停车王车牌号码专用键盘规则和设计说明](./NumberRules.md)
-
-1. [中华人民共和国民用机动车号牌](https://zh.wikipedia.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E7%94%A8%E6%9C%BA%E5%8A%A8%E8%BD%A6%E5%8F%B7%E7%89%8C)
+1. 参见：[中国车牌号码编码规则全解](http://yoojia.xyz/2018/05/09/chinese-vehicle-number/)
+1. 参见：[中华人民共和国民用机动车号牌](https://zh.wikipedia.org/wiki/中华人民共和国民用机动车号牌)
 
 
 ## 已知问题
