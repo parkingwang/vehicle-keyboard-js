@@ -304,7 +304,8 @@
     });
 
     // 禁用键位: 处理新能源键盘模式下，首位不允许出现的字符
-    _GlobalConf.mixiner.reg(function(layout, args) {
+
+/*     _GlobalConf.mixiner.reg(function(layout, args) {
         return _mapLayout(layout, function(entity) {
             var enabled = entity.enabled;
             if (enabled && args.index === 0 && layout.numberType === def.NUM_TYPES.NEW_ENERGY) {
@@ -312,7 +313,7 @@
             }
             return hlp.keyOfEnabled(entity, enabled);
         });
-    });
+    }); */
 
     // 功能按钮“确定、删除、更多”等按键的转换处理
     _GlobalConf.mixiner.reg(function(layout) {
@@ -345,7 +346,7 @@
         // 当输入车牌达到最后一位时可以点击
         return _mapLayout(layout, function(entity){
                 if(entity.keyCode === def.KEY_TYPES.FUN_OK){
-                    return hlp.keyOfEnabled(entity, layout.numberLength === layout.numberLimitLength);
+                    return hlp.keyOfEnabled(entity, 1);
                 }else{
                     return entity;
                 }
