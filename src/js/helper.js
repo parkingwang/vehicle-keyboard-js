@@ -52,12 +52,13 @@ export function contains(src, item) {
     return src.indexOf(item) >= 0;
 }
 
-function isProvince(str) {
+function isProvince(str) {    
     return contains(def.S_CIVIL_PVS, str);
 }
 
     /** 探测车牌号码的模式 */
 export function detectNumberTypeOf(presetNumber) {
+    presetNumber = presetNumber.replace(/[ ]/g,"");
     if (presetNumber.length === 0) {
         return def.NUM_TYPES.AUTO_DETECT;
     } else {
